@@ -36,13 +36,13 @@
         </thead>
         <tbody>
         <tr id="tr-expand-row-{{i}}" class="clickableRow"
-            *ngFor="let record of listItems ; i as index"
+            *ngFor="let record of listItems; index as i;"
             data-ng-class="{'selected':i == tableRowIndexCurrExpanded}"
-            aria-expanded="expandTblCtrl.getExpandedState($index)"
-
-            title="TOGGLE_EXPAND {{i+1}}"
+            aria-expanded="expandTblCtrl.getExpandedState(i)" title="TOGGLE_EXPAND {{i+1}}"
             data-ng-click="selectTableRow(i)">
-            <td></td>
+            <td width="2%"><span ng-class="{'fa fa-caret-down fa-lg fa-fw':getExpandedState(i) ,'fa fa-caret-right fa-lg fa-fw':!getExpandedState(i)} "
+                        ng-class="{open:expandTblCtrl.getExpandedState(i)}"
+            ></span>{{i}}</td>
           <!--  <td width="2%" aria-selected="{{!expandTblCtrl.dayDataCollapse[$index]}}">
                             <span ng-class="{'fa fa-caret-down fa-lg fa-fw':expandTblCtrl.getExpandedState($index) ,'fa fa-caret-right fa-lg fa-fw':!expandTblCtrl.getExpandedState($index)} "
                                   ng-class="{open:expandTblCtrl.getExpandedState($index)}"
@@ -50,13 +50,28 @@
             </td>-->
         <td *ngFor="let def of columnDefinitions" width="{{def.width}}%">
             <span>{{record[def.binding]}}</span>
-            <!-- <span ng-if="!def.isHtml"> {{record[def.binding]|translate}}</span>-->
+            <!-- <span ng-if="!def.isHtml"> {{  record[def.binding]|translate}}</span>-->
             <!--  <span ng-if="def.isHtml" ng-bind-html="record[def.binding]"></span>-->
         </td>
         </tr>
-        <ng-content>
+        <div *ngIf="expanderTable[i]">
+           <span>foo</span>
+            <ng-content>
+            </ng-content>
+        </div>
 
-        </ng-content>
+       <!-- <tr data-ng-show="!expandTblCtrl.dayDataCollapse[$index]" data-ng-repeat-end>
+            <td colspan="{{::expandTblCtrl.numberCols}}">
+                <ng-form name="{{::expandTblCtrl.formName}}_{{::$index}}">
+                    <ng-form name="expandTblCtrl.transcludeForm[$index]">
+                        <div ng-if="!(expandTblCtrl.dayDataCollapse[$index] && expandTblCtrl.transcludeForm[$index].$valid)">
+                            <div ng-transclude>
+                            </div>
+                        </div>
+                    </ng-form>
+                </ng-form>
+            </td>
+        </tr>-->
         </tbody>
     </table>
 

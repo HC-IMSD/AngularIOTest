@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NgForm} from '@angular/forms';
-
+import {NgIf} from '@angular/common';
 
 @Component({
     selector: 'expander-component',
@@ -12,9 +12,11 @@ import {NgForm} from '@angular/forms';
  */
 export class ExpanderComponent {
     name: string;
+    rowIndex: number;
     collapsed1 = false;
     collapsed2 = false;
     collapsed3 = false;
+    expanderTable = [false, false];
     columnDefinitions = [
         {
             label: 'FIRSTNAME',
@@ -31,6 +33,10 @@ export class ExpanderComponent {
         {
             'givenName': 'Dan',
             'lastName': 'Kilty'
+        },
+        {
+            'givenName': 'Jane',
+            'lastName': 'Smith'
         }
     ];
 
@@ -45,4 +51,18 @@ export class ExpanderComponent {
     test(name ?: String) {
         return 'This is a test';
     }
+
+  /*  selectTableRow(rowIndex: number) {
+        for (let i in this.expanderTable) {
+            if (i == rowIndex) {
+                this.expanderTable[i] = true;
+            } else {
+                this.expanderTable[i] = false;
+            }
+
+
+        }
+
+    }*/
+
 }
