@@ -19,6 +19,7 @@
   "main": "test-lib.umd.js",
   "module": "test-lib.js",
   "jsnext:main": "test-lib.js",
+  "gulp-connect": "^5.0.0",
   "typings": "test-lib.d.ts",
   "peerDependencies": {
     "@angular/core": "^4.0.0",

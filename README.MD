@@ -1,5 +1,11 @@
 # test-lib
 https://github.com/jvandemo/generator-angular2-library
+
+## Playground instructions.
+
+To preview your library during development type
+npm run playground
+
 ## Installation
 
 To install this library, run:

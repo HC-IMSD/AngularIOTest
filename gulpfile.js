@@ -6,7 +6,8 @@ var gulp = require('gulp'),
   rename = require('gulp-rename'),
   del = require('del'),
   runSequence = require('run-sequence'),
-  inlineResources = require('./tools/gulp/inline-resources');
+  inlineResources = require('./tools/gulp/inline-resources'),
+connect = require("gulp-connect");
 
 const rootFolder = path.join(__dirname);
 const srcFolder = path.join(rootFolder, 'src');
@@ -219,3 +220,11 @@ gulp.task('default', ['build:watch']);
 function deleteFolders(folders) {
   return del(folders);
 }
+
+gulp.task('connect-server-start', function () {
+    connect.server({
+        // host:"127.0.0.1",
+        port: 3131,
+        livereload: true
+    });
+});

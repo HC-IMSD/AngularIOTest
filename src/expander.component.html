@@ -34,44 +34,39 @@
             <!-- <th scope="col" ng-if="!expandTblCtrl.disableErrorCol">{{::'ERRORS'|translate}}</th>-->
         </tr>
         </thead>
-        <tbody>
-        <tr id="tr-expand-row-{{i}}" class="clickableRow"
-            *ngFor="let record of listItems; index as i;"
-            data-ng-class="{'selected':i == tableRowIndexCurrExpanded}"
-            aria-expanded="expandTblCtrl.getExpandedState(i)" title="TOGGLE_EXPAND {{i+1}}"
-            data-ng-click="selectTableRow(i)">
-            <td width="2%"><span ng-class="{'fa fa-caret-down fa-lg fa-fw':getExpandedState(i) ,'fa fa-caret-right fa-lg fa-fw':!getExpandedState(i)} "
-                        ng-class="{open:expandTblCtrl.getExpandedState(i)}"
-            ></span>{{i}}</td>
-          <!--  <td width="2%" aria-selected="{{!expandTblCtrl.dayDataCollapse[$index]}}">
-                            <span ng-class="{'fa fa-caret-down fa-lg fa-fw':expandTblCtrl.getExpandedState($index) ,'fa fa-caret-right fa-lg fa-fw':!expandTblCtrl.getExpandedState($index)} "
-                                  ng-class="{open:expandTblCtrl.getExpandedState($index)}"
-                            ></span>
-            </td>-->
-        <td *ngFor="let def of columnDefinitions" width="{{def.width}}%">
-            <span>{{record[def.binding]}}</span>
-            <!-- <span ng-if="!def.isHtml"> {{  record[def.binding]|translate}}</span>-->
-            <!--  <span ng-if="def.isHtml" ng-bind-html="record[def.binding]"></span>-->
-        </td>
-        </tr>
-        <div *ngIf="expanderTable[i]">
-           <span>foo</span>
-            <ng-content>
-            </ng-content>
-        </div>
-
-       <!-- <tr data-ng-show="!expandTblCtrl.dayDataCollapse[$index]" data-ng-repeat-end>
-            <td colspan="{{::expandTblCtrl.numberCols}}">
-                <ng-form name="{{::expandTblCtrl.formName}}_{{::$index}}">
-                    <ng-form name="expandTblCtrl.transcludeForm[$index]">
-                        <div ng-if="!(expandTblCtrl.dayDataCollapse[$index] && expandTblCtrl.transcludeForm[$index].$valid)">
-                            <div ng-transclude>
-                            </div>
-                        </div>
-                    </ng-form>
-                </ng-form>
+        <tbody *ngFor="let record of listItems; index as i;">
+        <tr id="tr-expand-row-{{i}}" class="clickableRow" role="button"
+            [ngClass]="{'selected':i == tableRowIndexCurrExpanded}"
+            [attr.aria-expanded]="getExpandedState(i)" title="TOGGLE_EXPAND {{i+1}}"
+            (click)="selectTableRow(i,f)">
+            <td width="2%"><span class="fa fa-lg fa-fw"
+                                 [ngClass]="{'fa-caret-right':isCollapsed(i), 'fa-caret-down':isExpanded(i) }"
+            ></span>{{i}}
             </td>
-        </tr>-->
+            <!--  <td width="2%" aria-selected="{{!expandTblCtrl.dayDataCollapse[$index]}}">
+                              <span ng-class="{'fa fa-caret-down fa-lg fa-fw':expandTblCtrl.getExpandedState($index) ,'fa fa-caret-right fa-lg fa-fw':!expandTblCtrl.getExpandedState($index)} "
+                                    ng-class="{open:expandTblCtrl.getExpandedState($index)}"
+                              ></span>
+              </td>-->
+            <td *ngFor="let def of columnDefinitions" width="{{def.width}}%">
+                <span>{{record[def.binding]}}</span>
+                <!-- <span ng-if="!def.isHtml"> {{  record[def.binding]|translate}}</span>-->
+                <!--  <span ng-if="def.isHtml" ng-bind-html="record[def.binding]"></span>-->
+            </td>
+        </tr>
+        <tr [hidden]="!isExpanded(i)">
+            <td  [attr.colspan]="numberColumns">
+            <div *ngIf="rowValid||isExpanded(i)">
+                <p>Foo</p>
+                <form novalidate #f="ngForm">
+                    <div>
+                        <input type="text" name="foo"  [(ngModel)]="foo" required  />
+                        <ng-content></ng-content>
+                    </div>
+                </form>
+            </div>
+            </td>
+        </tr>
         </tbody>
     </table>
 

@@ -5,6 +5,7 @@ import {SampleDirective} from './sample.directive';
 import {SamplePipe} from './sample.pipe';
 import {SampleService} from './sample.service';
 import {ExpanderComponent} from './expander.component';
+import { FormsModule } from '@angular/forms';
 /*
 import {ExpanderComponent} from './expandier';
 */
@@ -18,7 +19,8 @@ export * from './expander.component';
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
+        FormsModule
     ],
     declarations: [
         SampleComponent,
