@@ -6,14 +6,17 @@ import {NgModule} from '@angular/core';
 import {Component} from '@angular/core';
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 
+
 import {SampleModule} from 'test-lib';
 import {ExpanderComponent} from 'test-lib';
+import {AddressDetailsComponent} from  'test-lib';
 @Component({
     selector: 'app',
     template: `
         <div>
             <sample-component></sample-component>
-            <expander-component></expander-component>
+         <!--   <expander-component></expander-component>-->
+            <rep-list></rep-list>
         </div>`
 
 })

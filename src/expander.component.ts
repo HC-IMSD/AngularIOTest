@@ -1,6 +1,8 @@
 import {Component, Input, ViewChild, AfterViewInit} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import {NgForm, FormGroup} from '@angular/forms';
 import {NgIf} from '@angular/common';
+
+
 
 
 @Component({
@@ -13,15 +15,17 @@ import {NgIf} from '@angular/common';
  * Sample component is used for nothing
  */
 export class ExpanderComponent implements AfterViewInit {
-    @ViewChild('f') public detailsFrm: NgForm;
+    @ViewChild('rowForm') public detailsFrm: NgForm;
     @Input() disableExpand = true;
+
+
     name: string;
     rowIndex: number;
     rowValid: boolean;
     foo: '';
     tableRowIndexCurrExpanded = -1;
-    private _expanderTable = [false, true];
-    columnDefinitions = [
+    private _expanderTable = [false, false];
+    @Input() columnDefinitions = [
         {
             label: 'FIRSTNAME',
             binding: 'givenName',
@@ -50,6 +54,7 @@ export class ExpanderComponent implements AfterViewInit {
     }
 
     ngAfterViewInit() {
+
         this.detailsFrm.valueChanges.subscribe(data => {
             // console.log('Form changes', data)
             this.rowValid = this.rowIsValid();
@@ -79,7 +84,7 @@ export class ExpanderComponent implements AfterViewInit {
         return !this.getExpandedState(index);
     }
 
-    selectTableRow(index: number, f) {
+    selectTableRow(index: number) {
         if ((this.detailsFrm && !this.detailsFrm.valid) && this.disableExpand) {
             return;
         }
@@ -113,6 +118,7 @@ export class ExpanderComponent implements AfterViewInit {
     }
 
     rowIsValid() {
+        console.log(this.detailsFrm);
         if (this.detailsFrm) {
             return (this.detailsFrm.valid);
         } else {

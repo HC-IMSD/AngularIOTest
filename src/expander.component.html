@@ -1,53 +1,21 @@
 <div>
-    <!-- <table fixed>
-         <tr>
-             <td>
-                 Click to toggle content 1
-                 <button (click)="collapsed1=!collapsed1">Toggle me</button>
-             </td>
-         </tr>
-         <tr *ngIf="!collapsed1">
-             <td>
-                 <p>Showing content 1</p>
-                 <p>Grass is green</p>
-             </td>
-         </tr>
-         <tr>
-             <td>
-                 Click to toggle content 2
-                 <button (click)="collapsed2=!collapsed2">Toggle me</button>
-             </td>
-         </tr>
-         <tr *ngIf="!collapsed2">
-             <td>
-                 <p>Showing content 2</p>
-                 <p>The sky is blue</p>
-             </td>
-         </tr>
-     </table>-->
     <table class="table dataTable table-bordered table-hover table-condensed table-striped">
         <thead>
         <tr>
             <th aria-label="Expanded State" scope="col" style="color:transparent">e</th>
             <th scope="col" *ngFor="let heading of columnDefinitions">{{heading.label}}</th>
-            <!-- <th scope="col" ng-repeat="heading in expandTblCtrl.columnDefinitions">{{::heading.label |translate}}</th>-->
-            <!-- <th scope="col" ng-if="!expandTblCtrl.disableErrorCol">{{::'ERRORS'|translate}}</th>-->
         </tr>
         </thead>
         <tbody *ngFor="let record of listItems; index as i;">
+
         <tr id="tr-expand-row-{{i}}" class="clickableRow" role="button"
             [ngClass]="{'selected':i == tableRowIndexCurrExpanded}"
             [attr.aria-expanded]="getExpandedState(i)" title="TOGGLE_EXPAND {{i+1}}"
-            (click)="selectTableRow(i,f)">
+            (click)="selectTableRow(i)">
             <td width="2%"><span class="fa fa-lg fa-fw"
                                  [ngClass]="{'fa-caret-right':isCollapsed(i), 'fa-caret-down':isExpanded(i) }"
             ></span>{{i}}
             </td>
-            <!--  <td width="2%" aria-selected="{{!expandTblCtrl.dayDataCollapse[$index]}}">
-                              <span ng-class="{'fa fa-caret-down fa-lg fa-fw':expandTblCtrl.getExpandedState($index) ,'fa fa-caret-right fa-lg fa-fw':!expandTblCtrl.getExpandedState($index)} "
-                                    ng-class="{open:expandTblCtrl.getExpandedState($index)}"
-                              ></span>
-              </td>-->
             <td *ngFor="let def of columnDefinitions" width="{{def.width}}%">
                 <span>{{record[def.binding]}}</span>
                 <!-- <span ng-if="!def.isHtml"> {{  record[def.binding]|translate}}</span>-->
@@ -55,20 +23,23 @@
             </td>
         </tr>
         <tr [hidden]="!isExpanded(i)">
-            <td  [attr.colspan]="numberColumns">
-            <div *ngIf="rowValid||isExpanded(i)">
-                <p>Foo</p>
-                <form novalidate #f="ngForm">
-                    <div>
-                        <input type="text" name="foo"  [(ngModel)]="foo" required  />
-                        <ng-content></ng-content>
+            <td [attr.colspan]="numberColumns">
+               <form novalidate #rowForm="ngForm">
+                    <div *ngIf="rowValid||isExpanded(i)">
+                        <p>Foo</p>
+                       <!-- <form novalidate #contentForm="ngForm">-->
+                            <div>
+                                <input type="text" name="foo" [(ngModel)]="foo" required/>
+                                <ng-content></ng-content>
+                            </div>
+                        <address-details ></address-details>
+                     <!--</form>-->
                     </div>
-                </form>
-            </div>
+               </form>
             </td>
         </tr>
+        <pre>{{rowForm|json}}</pre>
         </tbody>
     </table>
-
 </div>
 
